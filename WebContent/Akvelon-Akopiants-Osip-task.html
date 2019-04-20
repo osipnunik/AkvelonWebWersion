@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+	<title>JS practice</title>
+
+	<meta charset="utf-8">
+
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+	
+	<style type="text/css">
+		i{
+			color:green;
+		}
+		table{
+			width: 100%;
+			border: 2px solid orange;
+			padding: 1px;
+		}
+		h1{
+			text-align: center;
+			color: purple;
+		}
+		p{
+			text-align: center;
+		}
+		button{
+			padding: 1px;
+			color: green;
+			background-color: yellow;
+			border-radius: 30%;
+			border: 2px solid red;
+		}
+
+	</style>
+
+</head>
+
+<body>
+	<h1>Akvelon task</h1>
+	<noscript><p>Ваш браузер не поддерживает скрипты!</p></noscript>
+	<p><i class="fas fa-info"></i><i> click on the sells to change the values</i></p>
+<table id="table" border="1px solid">
+
+</table>	
+<div id="btndiv">
+<button onclick="countMaxSequence(this)">click to know result</button>
+</div>
+<script>
+
+	var arr = [
+  		[0, 0, 0, 1, 0, 0],
+  		[0, 0, 1, 1, 0, 0],
+  		[0, 0, 0, 1, 0, 0]
+	];
+	console.log(arr);
+
+	var table = document.getElementById('table');
+	for(var i = 0; i < arr.length; i++){
+		var parentraw = document.createElement('tr');
+		
+		for(var j = 0; j < arr[i].length; j++){
+			createTdTag(parentraw, i, j);
+	}
+		table.appendChild(parentraw);
+	}
+	
+
+	function countMaxSequence(id){
+		id.innerHTML = 'greatest sequence in arr is : '+getLongestSequenceInArray();
+	}
+
+	function createTdTag(parentraw, i, j){
+		var parenttd = document.createElement('td');
+		//parenttd.style.align('center');
+		parentraw.appendChild(parenttd);
+		createElementOnHtml('input', parenttd, i, j);
+		createElementOnHtml('i', parenttd, i, j);
+	}
+
+	function createElementOnHtml(tag, parenttd, i, j){
+		if(tag == 'input'){
+			elin = document.createElement(tag);
+			elin.setAttribute('id', i+':'+j);
+			elin.setAttribute('type', 'button');
+			elin.style.width = '80%';
+			elin.style.color = 'purple';
+			elin.value = arr[i][j];
+			elin.addEventListener("click", function(event){
+				var newval = (arr[i][j] == 1) ? 0 : 1;
+				event.target.value=arr[i][j] = newval;
+				var bt = document.getElementsByTagName('button')[0];
+				bt.innerText = 'greatest sequence in array is : ' + getLongestSequenceInArray();
+			});
+			parenttd.appendChild(elin);
+		}
+		if(tag == 'i'){
+			var i = document.createElement(tag);
+			i.classList.add('far');
+			i.classList.add('fa-arrow-alt-circle-left');
+			parenttd.appendChild(i);
+			
+		}
+	}
+
+
+	function getLongestSequenceInArray(){
+		return Math.max(gorisontal(), vertical());
+	}
+	
+	function gorisontal(){
+		var longest = 0;
+		var count = 0;
+		for(var i = 0; i < arr.length; i++){
+			for(var j = 0; j < arr[i].length; j++){
+				if(arr[i][j]==1){
+					count++;
+				}
+			}
+			if(count > longest){
+				longest = count;
+			}
+			count = 0;
+		}
+		return longest;
+	}
+
+	function vertical(){
+		var count = 0;
+		var maxCount = 0;
+		for (var j = 0; j < arr[0].length; j++) {
+			for (var i = 0; i < arr.length; i++) {
+				//System.out.print(array[i][j]+"C ");
+				if (arr[i][j] == 1) {
+					count++;
+				}
+			}
+			if (count > maxCount) {
+				maxCount = count;
+			}
+			count = 0;
+		}
+		return maxCount;
+	}
+
+</script>
+
+</body>
+
+</html>
